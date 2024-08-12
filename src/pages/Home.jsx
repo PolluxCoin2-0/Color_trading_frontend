@@ -1,6 +1,6 @@
 import Timer from "../components/Timer";
 import yellowPoxImg from "../assets/yellow.png";
-import pinkPoxImg from "../assets/pink.png";
+import whitePoxImg from "../assets/white.png";
 import redPoxImg from "../assets/red.png";
 import greenPoxImg from "../assets/green.png";
 import iconImg from "../assets/icon.png";
@@ -45,7 +45,7 @@ const Home = () => {
               <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:w-full">
                 2
               </p>
-              <img src={pinkPoxImg} alt="" className="w-[90%]" />
+              <img src={whitePoxImg} alt="" className="w-[90%]" />
               <input
                 type="number"
                 placeholder="Amount"
