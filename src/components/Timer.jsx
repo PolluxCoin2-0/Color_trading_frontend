@@ -32,7 +32,8 @@ const Timer = () => {
   }, [targetDate]);
 
   return (
-    <div className="flex items-start justify-center w-full gap-3 count-down-main ">
+    <div className="flex items-start justify-center w-full gap-3 count-down-main bg-gradient-to-b from-[#4A93B6] to-[#006799] rounded-3xl py-2 border-[2px] shadow-inner shadow-[#006799]
+     border-white">
       <div className="timer w-5">
         <div>
           <h3 className="countdown-element hours  font-semibold  text-2xl text-white ">
