@@ -7,6 +7,7 @@ function App() {
 
   return (
     <div>
+      <Navbar />
        <Router> 
          <Routes>
            <Route path="/navbar" element={<Navbar />} /> 
