@@ -28,7 +28,7 @@ const Home = () => {
         <div className="flex flex-col items-center justify-start md:flex-row md:justify-center md:items-center space-y-5 md:space-y-0 space-x-0 md:space-x-5 lg:space-x-10 w-full mt-10 ml-5 md:ml-0 lg:ml-0 xl:ml-0 2xl:ml-24">
           <div className="w-2/3 md:w-1/5 lg:w-1/4 xl:w-1/4 2xl:w-[90%]">
             <div className="w-full">
-              <p className="text-[#979797] text-2xl text-center pb-0 md:pb-5 pr-6 md:pr-4 lg:pr-6">
+              <p className="text-[#979797] text-2xl text-center pb-0 md:pb-5 pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
                 2
               </p>
               <img src={yellowPoxImg} alt="Yellow Pox" className="w-[90%]" />
@@ -42,7 +42,7 @@ const Home = () => {
 
           <div className="w-[65%] md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[90%]">
             <div className="w-full">
-              <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:w-full pr-6 md:pr-4 lg:pr-6 ">
+              <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:w-full pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
                 2
               </p>
               <img src={whitePoxImg} alt="White Pox" className="w-[90%]" />
@@ -56,7 +56,7 @@ const Home = () => {
 
           <div className="w-[65%] md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[90%]">
             <div className="w-full">
-              <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:w-full pr-6 md:pr-4 lg:pr-6">
+              <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:w-full pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
                 2
               </p>
               <img src={redPoxImg} alt="Red Pox" className="w-[90%]" />
@@ -70,7 +70,7 @@ const Home = () => {
 
           <div className="w-[65%] md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[90%]">
             <div className="w-full">
-              <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:full pr-6 md:pr-4 lg:pr-6">
+              <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:full pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
                 2
               </p>
               <img src={greenPoxImg} alt="Green Pox" className="w-[90%]" />
