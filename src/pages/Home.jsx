@@ -101,7 +101,7 @@ const Home = () => {
   };
 
   return (
-    <div className="relative w-full h-full bg-gradient-to-b from-[#010101] via-[#010101] to-[#e9dede]">
+    <div className="relative w-full h-full bg-gradient-to-b from-[#010101] via-[#010101] to-[#e9dede] ">
       {/* Background Image */}
       <img
         src={bgImg}
@@ -110,7 +110,7 @@ const Home = () => {
       />
 
       {/* Main Content */}
-      <div className="relative z-10 w-full min-h-screen px-4 md:px-4 lg:px-24 flex flex-col items-center justify-center pr-4 lg:pr-20 xl:pr-20 2xl:pr-40 pb-10">
+      <div className="relative z-10 w-full min-h-screen px-4 md:px-4 lg:px-24 flex flex-col items-center justify-center pr-4 lg:pr-20 xl:pr-20 2xl:pr-40 pb-10 ">
         <div className="w-[70%] md:w-[50%] lg:w-[40%] xl:w-[40%] 2xl:w-[20%] flex flex-col justify-center items-center">
           <p className="text-xl font-bold text-white lg:text-center mb-6 pt-10 md:pt-0">
             Draw Time
