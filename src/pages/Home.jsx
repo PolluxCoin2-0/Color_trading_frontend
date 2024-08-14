@@ -44,22 +44,16 @@ const Home = () => {
       }
 
       const yellowData = await postGetUserBidCountByColor(walletAddress, 0);
-      const yellowDataDecimal = await polluxweb.toDecimal(
-        yellowData?.data?.hex
-      );
-      setYellowCount(yellowDataDecimal);
+      setYellowCount(yellowData?.data);
 
       const whiteData = await postGetUserBidCountByColor(walletAddress, 1);
-      const whiteDataDecimal = await polluxweb.toDecimal(whiteData?.data?.hex);
-      setWhiteCount(whiteDataDecimal);
+      setWhiteCount(whiteData?.data);
 
       const redData = await postGetUserBidCountByColor(walletAddress, 2);
-      const redDataDecimal = await polluxweb.toDecimal(redData?.data?.hex);
-      setRedCount(redDataDecimal);
+      setRedCount(redData?.data);
 
       const greenData = await postGetUserBidCountByColor(walletAddress, 3);
-      const greenDataDecimal = await polluxweb.toDecimal(greenData?.data?.hex);
-      setGreenCount(greenDataDecimal);
+      setGreenCount(greenData?.data);
     };
 
     fetchData();
