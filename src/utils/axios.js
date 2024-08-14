@@ -5,9 +5,9 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const postPlaceBetMethod = async (walletAddress, color, amount) => {
   try {
     const res = await axios.post(BASE_URL + "/placeBetMethod", {
-      walletAddress: "",
-      color: 0,
-      amount: "1",
+      walletAddress: walletAddress,
+      color: color,
+      amount: amount
     });
     return res?.data;
   } catch (error) {
@@ -18,7 +18,7 @@ export const postPlaceBetMethod = async (walletAddress, color, amount) => {
 export const postGetUserTotalWinnings = async (walletAddress) => {
     try {
         const res = await axios.post(BASE_URL + "/getUserTotalWinnings", {
-        walletAddress: ""
+        walletAddress: walletAddress
         });
         return res?.data;
     } catch (error) {
@@ -31,8 +31,8 @@ export const postGetUserTotalWinnings = async (walletAddress) => {
 export const postGetUserBidCountByColor = async (walletAddress, color) => {
     try {
         const res = await axios.post(BASE_URL +"/getUserBidCountByColor", {
-            walletAddress: "",
-            color:0
+            walletAddress: walletAddress,
+            color:color
         });
         return res?.data;
     } catch (error) {
@@ -50,11 +50,11 @@ export const getWinColor = async () => {
     }
 }
 
-export const postApprovalUSDX = async (walletAddress, amount) => {
+export const getApproval= async (walletAddress, amount) => {
     try {
         const res = await axios.post(BASE_URL + "/approvalUSDX", {
-             walletAddress: "",
-             amount: "10"
+             walletAddress: walletAddress,
+             amount: amount
         });
         return res?.data;
     } catch (error) {
