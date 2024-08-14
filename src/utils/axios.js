@@ -62,4 +62,22 @@ export const getApproval= async (walletAddress, amount) => {
     }
 }
 
+export const startBidding = async () => {
+    try {
+        const res = await axios.post(BASE_URL + "/startBettingAdmin");
+        return res?.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const endBidding = async () => {
+    try {
+        const res = await axios.post(BASE_URL + "/closeRoundAdmin");
+        return res?.data;
+    } catch (error) {
+        console.log(error)
+    } 
+}
+
 
