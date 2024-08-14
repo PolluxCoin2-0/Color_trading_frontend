@@ -3,20 +3,16 @@ import Home from "../src/pages/Home";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function App() {
-  
-
   return (
-    <div>
+    <Router>
       <Navbar />
-       <Router> 
-         <Routes>
-           <Route path="/navbar" element={<Navbar />} /> 
-           <Route path="/" element={<Home />} />
-           <Route path="/home" element={<Home />} />
-         </Routes>
-       </Router>
-    </div>
-  )
+      <Routes>
+        <Route path="/navbar" element={<Navbar />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

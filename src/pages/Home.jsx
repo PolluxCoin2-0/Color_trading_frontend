@@ -101,7 +101,7 @@ const Home = () => {
   };
 
   return (
-    <div className="relative w-full h-full bg-gradient-to-b from-[#010101] via-[#010101] to-[#e9dede] ">
+    <div className="relative w-full h-full bg-gradient-to-b from-[#010101] via-[#010101] to-[#e9dede] pb-20">
       {/* Background Image */}
       <img
         src={bgImg}
