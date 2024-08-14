@@ -5,8 +5,101 @@ import redPoxImg from "../assets/red.png";
 import greenPoxImg from "../assets/green.png";
 import iconImg from "../assets/icon.png";
 import bgImg from "../assets/bgImage.png";
+import { useEffect, useState } from "react";
+import {
+  getApproval,
+  getWinColor,
+  postGetUserBidCountByColor,
+  postPlaceBetMethod,
+} from "../utils/axios";
+import polluxweb from "polluxweb";
 
 const Home = () => {
+  const [winningColor, setWinningColor] = useState("");
+  const [redCount, setRedCount] = useState(0);
+  const [whiteCount, setWhiteCount] = useState(0);
+  const [yellowCount, setYellowCount] = useState(0);
+  const [greenCount, setGreenCount] = useState(0);
+  const [betAmounts, setBetAmounts] = useState({
+    yellow: 1,
+    white: 1,
+    red: 1,
+    green: 1,
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const walletAddress = localStorage.getItem("wallet");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getWinColor();
+      if (data?.data === 0) {
+        setWinningColor("Yellow");
+      } else if (data?.data === 1) {
+        setWinningColor("White");
+      } else if (data?.data === 2) {
+        setWinningColor("Red");
+      } else {
+        setWinningColor("Green");
+      }
+
+      const yellowData = await postGetUserBidCountByColor(walletAddress, 0);
+      const yellowDataDecimal = await polluxweb.toDecimal(
+        yellowData?.data?.hex
+      );
+      setYellowCount(yellowDataDecimal);
+
+      const whiteData = await postGetUserBidCountByColor(walletAddress, 1);
+      const whiteDataDecimal = await polluxweb.toDecimal(whiteData?.data?.hex);
+      setWhiteCount(whiteDataDecimal);
+
+      const redData = await postGetUserBidCountByColor(walletAddress, 2);
+      const redDataDecimal = await polluxweb.toDecimal(redData?.data?.hex);
+      setRedCount(redDataDecimal);
+
+      const greenData = await postGetUserBidCountByColor(walletAddress, 3);
+      const greenDataDecimal = await polluxweb.toDecimal(greenData?.data?.hex);
+      setGreenCount(greenDataDecimal);
+    };
+
+    fetchData();
+  }, []);
+
+  const handleBet = async (color, amount) => {
+    if (isLoading) {
+      return;
+    }
+
+    setIsLoading(true);
+    const transaction = await getApproval(walletAddress, amount);
+    const signedTransaction = await window.pox.signdata(
+      transaction?.data?.transaction
+    );
+
+    JSON.stringify(
+      await window.pox.broadcast(JSON.parse(signedTransaction[1]))
+    );
+
+    const apiData = await postPlaceBetMethod(walletAddress, color, amount);
+
+    const signedTransaction1 = await window.pox.signdata(
+      apiData?.data?.transaction
+    );
+
+    JSON.stringify(
+      await window.pox.broadcast(JSON.parse(signedTransaction1[1]))
+    );
+
+    setIsLoading(false);
+  };
+
+  const handleBetAmountChange = (color, amount) => {
+    setBetAmounts((prev) => ({
+      ...prev,
+      [color]: amount,
+    }));
+  };
+
   return (
     <div className="relative w-full h-full bg-gradient-to-b from-[#010101] via-[#010101] to-[#e9dede]">
       {/* Background Image */}
@@ -27,58 +120,112 @@ const Home = () => {
 
         <div className="flex flex-col items-center justify-start md:flex-row md:justify-center md:items-center space-y-5 md:space-y-0 space-x-0 md:space-x-5 lg:space-x-10 w-full mt-10 ml-5 md:ml-0 lg:ml-0 xl:ml-0 2xl:ml-24">
           <div className="w-2/3 md:w-1/5 lg:w-1/4 xl:w-1/4 2xl:w-[90%]">
-            <div className="w-full">
+            <div className="w-full relative cursor-pointer">
               <p className="text-[#979797] text-2xl text-center pb-0 md:pb-5 pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
-                2
+                {yellowCount && yellowCount}
               </p>
-              <img src={yellowPoxImg} alt="Yellow Pox" className="w-[90%]" />
+              <img
+                src={yellowPoxImg}
+                alt="Yellow Pox"
+                className="w-[90%]"
+                onClick={() => handleBet(0, betAmounts?.yellow)}
+              />
               <input
+                onChange={(e) =>
+                  handleBetAmountChange("yellow", e.target.value)
+                }
+                value={betAmounts.yellow}
                 type="number"
                 placeholder="Amount"
                 className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
               />
+              <p
+                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[39%] md:top-[42%] lg:top-[42%] xl:top-[42%]
+             left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
+              >
+                Tap Here
+              </p>
             </div>
           </div>
 
           <div className="w-[65%] md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[90%]">
-            <div className="w-full">
+            <div className="w-full relative cursor-pointer">
               <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:w-full pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
-                2
+                {whiteCount && whiteCount}
               </p>
-              <img src={whitePoxImg} alt="White Pox" className="w-[90%]" />
+              <img
+                src={whitePoxImg}
+                alt="White Pox"
+                className="w-[90%]"
+                onClick={() => handleBet(1, betAmounts?.white)}
+              />
               <input
+                onChange={(e) => handleBetAmountChange("white", e.target.value)}
+                value={betAmounts.white}
                 type="number"
                 placeholder="Amount"
                 className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
               />
+              <p
+                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[39%] md:top-[42%] lg:top-[42%] xl:top-[42%]
+             left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
+              >
+                Tap Here
+              </p>
             </div>
           </div>
 
           <div className="w-[65%] md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[90%]">
-            <div className="w-full">
+            <div className="w-full relative cursor-pointer">
               <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:w-full pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
-                2
+                {redCount && redCount}
               </p>
-              <img src={redPoxImg} alt="Red Pox" className="w-[90%]" />
+              <img
+                src={redPoxImg}
+                alt="Red Pox"
+                className="w-[90%]"
+                onClick={() => handleBet(2, betAmounts?.red)}
+              />
               <input
+                onChange={(e) => handleBetAmountChange("red", e.target.value)}
+                value={betAmounts.red}
                 type="number"
                 placeholder="Amount"
                 className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
               />
+              <p
+                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[39%] md:top-[42%] lg:top-[42%] xl:top-[42%]
+             left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
+              >
+                Tap Here
+              </p>
             </div>
           </div>
 
           <div className="w-[65%] md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[90%]">
-            <div className="w-full">
+            <div className="w-full relative cursor-pointer">
               <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:full pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
-                2
+                {greenCount && greenCount}
               </p>
-              <img src={greenPoxImg} alt="Green Pox" className="w-[90%]" />
+              <img
+                src={greenPoxImg}
+                alt="Green Pox"
+                className="w-[90%]"
+                onClick={() => handleBet(3, betAmounts?.green)}
+              />
               <input
+                onChange={(e) => handleBetAmountChange("green", e.target.value)}
+                value={betAmounts.green}
                 type="number"
                 placeholder="Amount"
                 className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
               />
+              <p
+                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[39%] md:top-[42%] lg:top-[42%] xl:top-[42%]
+             left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
+              >
+                Tap Here
+              </p>
             </div>
           </div>
         </div>
@@ -97,7 +244,7 @@ const Home = () => {
           </div>
         </div>
         <p className="text-[#63F601] text-6xl md:text-8xl font-bold pt-5 whitespace-nowrap">
-          Green Color
+          {winningColor && winningColor} Color
         </p>
       </div>
     </div>
