@@ -27,7 +27,6 @@ const Navbar = () => {
         clearInterval(obj);
         const detailsData = JSON.stringify(await window.pox.getDetails());
         const parsedDetailsObject = JSON.parse(detailsData);
-        console.log(parsedDetailsObject);
         localStorage.setItem(
           "wallet",
           parsedDetailsObject[1].data?.wallet_address
