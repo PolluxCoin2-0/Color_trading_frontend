@@ -67,12 +67,12 @@ const Navbar = () => {
             alt=""
             className="bg-black px-1 py-1 md:px-2 md:py-2 rounded-lg"
           />
-          <p className="text-white font-bold text-2xl">Color Trade</p>
+          <p className="text-white font-bold text-2xl whitespace-nowrap hidden md:block">Color Trade</p>
         </div>
-          <div className="ml-12">
-            <p className=" text-lg md:text-2xl font-bold pt-1">You win: {winningCount? winningCount: 0} </p>
+          <div className="ml-0">
+            <p className=" text-lg md:text-2xl font-bold pt-1 text-white">You win: {winningCount? winningCount: 0} </p>
           </div>
-        <div className="flex items-center space-x-2 cursor-pointer z-20">
+        <div className="flex items-center space-x-2 cursor-pointer z-20 pr-4">
           <img
             src={WalletIcon}
             alt=""
@@ -81,7 +81,7 @@ const Navbar = () => {
           <p className="text-lg md:text-xl font-bold pt-1 md:pt-0 text-left leading-5 pb-2">
             <div onClick={getPolinkweb} className="text-white ">
               {
-                walletAddress ? truncateString(walletAddress,12) : (
+                walletAddress ? truncateString(walletAddress,8) : (
                   <>
                   <span className="block md:inline">Connect</span>
                   <span className="block md:inline"> Wallet</span>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { endBidding, startBidding } from "../utils/axios";
 
 const Timer = () => {
   const getTargetDate = () => {
@@ -40,7 +41,6 @@ const Timer = () => {
         seconds: Math.floor((difference / 1000) % 60),
       };
     }
-
     return timeLeft;
   };
 
@@ -53,7 +53,14 @@ const Timer = () => {
     const timer = setInterval(() => {
       const timeRemaining = calculateTimeLeft(targetDate);
       if (Object.keys(timeRemaining).length === 0) {
-        setTargetDate(getTargetDate()); // Reset the target date when time is up
+        // Call endBidding when time reaches 00:00:00
+        endBidding();
+
+        // Set a delay before calling startBidding
+        setTimeout(() => {
+          startBidding();
+          setTargetDate(getTargetDate()); // Reset the target date
+        }, 5000); // 5 seconds delay, adjust as needed
       } else {
         setTimeLeft(timeRemaining);
       }
