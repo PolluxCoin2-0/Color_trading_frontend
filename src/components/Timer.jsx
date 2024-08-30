@@ -2,30 +2,18 @@ import { useState, useEffect } from "react";
 import { endBidding, startBidding } from "../utils/axios";
 
 const Timer = () => {
-  const getTargetDate = () => {
+  const getNextHalfHour = () => {
     const now = new Date();
-    const startMorning = new Date();
-    startMorning.setHours(8, 0, 0, 0);
+    const minutes = now.getMinutes();
+    const nextHalfHour = new Date(now);
 
-    const startEvening = new Date();
-    startEvening.setHours(20, 0, 0, 0);
-
-    let targetDate;
-
-    if (now >= startMorning && now < startEvening) {
-      // Timer runs from 8:00 AM to 8:00 PM
-      targetDate = startEvening;
-    } else if (now >= startEvening || now < startMorning) {
-      // Timer runs from 8:00 PM to 8:00 AM the next day
-      if (now >= startEvening) {
-        targetDate = new Date(startMorning);
-        targetDate.setDate(now.getDate() + 1); // Set to 8:00 AM the next day
-      } else {
-        targetDate = startMorning; // If it's before 8:00 AM, count down to 8:00 AM
-      }
+    if (minutes < 30) {
+      nextHalfHour.setMinutes(30, 0, 0); // Set to next half hour mark
+    } else {
+      nextHalfHour.setHours(now.getHours() + 1, 0, 0); // Set to the top of the next hour
     }
 
-    return targetDate;
+    return nextHalfHour;
   };
 
   const calculateTimeLeft = (targetDate) => {
@@ -45,7 +33,7 @@ const Timer = () => {
   };
 
   const [timeLeft, setTimeLeft] = useState({});
-  const [targetDate, setTargetDate] = useState(getTargetDate());
+  const [targetDate, setTargetDate] = useState(getNextHalfHour());
 
   useEffect(() => {
     setTimeLeft(calculateTimeLeft(targetDate));
@@ -59,7 +47,7 @@ const Timer = () => {
         // Set a delay before calling startBidding
         setTimeout(() => {
           startBidding();
-          setTargetDate(getTargetDate()); // Reset the target date
+          setTargetDate(getNextHalfHour()); // Reset the target date to the next half hour
         }, 5000); // 5 seconds delay, adjust as needed
       } else {
         setTimeLeft(timeRemaining);
