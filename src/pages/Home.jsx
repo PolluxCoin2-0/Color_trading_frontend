@@ -100,8 +100,23 @@ const Home = () => {
     }));
   };
 
+  const getWinningColorClass = () => {
+    switch (winningColor) {
+      case "Yellow":
+        return "text-yellow-600";
+      case "White":
+        return "text-white";
+      case "Red":
+        return "text-red-600";
+      case "Green":
+        return "text-green-600";
+      default:
+        return "";
+    }
+  };
+
   return (
-    <div className="relative w-full h-full bg-gradient-to-b from-[#010101] via-[#010101] to-[#e9dede]">
+    <div className="relative w-full bg-gradient-to-b from-[#010101] via-[#010101] to-[#e9dede]">
       {/* Background Image */}
       <img
         src={bgImg}
@@ -243,7 +258,11 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <p className="text-[#63F601] text-6xl md:text-8xl font-bold pt-5 whitespace-nowrap">
+        <p
+          className={`${
+            getWinningColorClass()
+          } text-6xl md:text-8xl font-bold pt-5 whitespace-nowrap`}
+        >
           {winningColor && winningColor} Color
         </p>
       </div>
