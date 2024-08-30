@@ -65,26 +65,32 @@ const Home = () => {
     }
 
     setIsLoading(true);
-    const transaction = await getApproval(walletAddress, amount);
-    const signedTransaction = await window.pox.signdata(
-      transaction?.data?.transaction
-    );
 
-    JSON.stringify(
-      await window.pox.broadcast(JSON.parse(signedTransaction[1]))
-    );
+    try {
+      const transaction = await getApproval(walletAddress, amount);
+      const signedTransaction = await window.pox.signdata(
+        transaction?.data?.transaction
+      );
+  
+      JSON.stringify(
+        await window.pox.broadcast(JSON.parse(signedTransaction[1]))
+      );
+  
+      const apiData = await postPlaceBetMethod(walletAddress, color, amount);
+  
+      const signedTransaction1 = await window.pox.signdata(
+        apiData?.data?.transaction
+      );
+  
+      JSON.stringify(
+        await window.pox.broadcast(JSON.parse(signedTransaction1[1]))
+      );
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
 
-    const apiData = await postPlaceBetMethod(walletAddress, color, amount);
-
-    const signedTransaction1 = await window.pox.signdata(
-      apiData?.data?.transaction
-    );
-
-    JSON.stringify(
-      await window.pox.broadcast(JSON.parse(signedTransaction1[1]))
-    );
-
-    setIsLoading(false);
   };
 
   const handleBetAmountChange = (color, amount) => {
