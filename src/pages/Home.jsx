@@ -28,7 +28,7 @@ const Home = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const walletAddress = localStorage.getItem("wallet");
+  const walletAddress = sessionStorage.getItem("wallet");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,6 +60,12 @@ const Home = () => {
   }, []);
 
   const handleBet = async (color, amount) => {
+
+    if(!walletAddress){
+      alert('Please connect your wallet to make a bet.')
+      return;
+    }
+    
     if (isLoading) {
       return;
     }
@@ -71,6 +77,8 @@ const Home = () => {
       const signedTransaction = await window.pox.signdata(
         transaction?.data?.transaction
       );
+
+      console.log(signedTransaction)
   
       JSON.stringify(
         await window.pox.broadcast(JSON.parse(signedTransaction[1]))
@@ -81,6 +89,8 @@ const Home = () => {
       const signedTransaction1 = await window.pox.signdata(
         apiData?.data?.transaction
       );
+
+      console.log(signedTransaction1)
   
       JSON.stringify(
         await window.pox.broadcast(JSON.parse(signedTransaction1[1]))
@@ -155,7 +165,7 @@ const Home = () => {
                 className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
               />
               <p
-                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[39%] md:top-[42%] lg:top-[42%] xl:top-[42%]
+                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[30%] md:top-[33%] lg:top-[35%] xl:top-[40%]
              left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
               >
                 Tap Here
@@ -182,7 +192,7 @@ const Home = () => {
                 className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
               />
               <p
-                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[39%] md:top-[42%] lg:top-[42%] xl:top-[42%]
+                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[30%] md:top-[33%] lg:top-[35%] xl:top-[40%]
              left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
               >
                 Tap Here
@@ -209,7 +219,7 @@ const Home = () => {
                 className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
               />
               <p
-                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[39%] md:top-[42%] lg:top-[42%] xl:top-[42%]
+                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[30%] md:top-[33%] lg:top-[35%] xl:top-[40%]
              left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
               >
                 Tap Here
@@ -236,7 +246,7 @@ const Home = () => {
                 className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
               />
               <p
-                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[39%] md:top-[42%] lg:top-[42%] xl:top-[42%]
+                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[30%] md:top-[33%] lg:top-[35%] xl:top-[40%]
              left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
               >
                 Tap Here
