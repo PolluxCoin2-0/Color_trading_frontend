@@ -7,7 +7,7 @@ import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const [winningCount, setWinningCount] = useState(0);
-  const walletAddress = localStorage.getItem("wallet");
+  const walletAddress = sessionStorage.getItem("wallet");
 
   useEffect(() => {
     if (walletAddress) {
@@ -27,7 +27,7 @@ const Navbar = () => {
         clearInterval(obj);
         const detailsData = JSON.stringify(await window.pox.getDetails());
         const parsedDetailsObject = JSON.parse(detailsData);
-        localStorage.setItem(
+        sessionStorage.setItem(
           "wallet",
           parsedDetailsObject[1].data?.wallet_address
         );

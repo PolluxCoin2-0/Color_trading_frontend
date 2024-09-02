@@ -36,10 +36,9 @@ const Timer = () => {
   const [targetDate, setTargetDate] = useState(getNextHalfHour());
 
   useEffect(() => {
-    setTimeLeft(calculateTimeLeft(targetDate));
-
     const timer = setInterval(() => {
       const timeRemaining = calculateTimeLeft(targetDate);
+
       if (Object.keys(timeRemaining).length === 0) {
         // Call endBidding when time reaches 00:00:00
         endBidding();
@@ -47,7 +46,9 @@ const Timer = () => {
         // Set a delay before calling startBidding
         setTimeout(() => {
           startBidding();
-          setTargetDate(getNextHalfHour()); // Reset the target date to the next half hour
+
+          // Reset the target date to the next half hour
+          setTargetDate(getNextHalfHour());
         }, 5000); // 5 seconds delay, adjust as needed
       } else {
         setTimeLeft(timeRemaining);
@@ -55,7 +56,7 @@ const Timer = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [targetDate]);
+  }, [targetDate]); 
 
   return (
     <div className="flex items-start justify-center w-full gap-3 count-down-main bg-gradient-to-b from-[#4A93B6] to-[#006799] rounded-3xl py-2 border-[2px] shadow-inner shadow-[#006799] border-white">
