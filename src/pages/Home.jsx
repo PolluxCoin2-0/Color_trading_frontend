@@ -95,6 +95,8 @@ const Home = () => {
       JSON.stringify(
         await window.pox.broadcast(JSON.parse(signedTransaction1[1]))
       );
+
+      alert("Bet placed Successfully!");
     } catch (error) {
       console.error(error);
     } finally {
