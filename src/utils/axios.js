@@ -27,10 +27,9 @@ export const postGetUserTotalWinnings = async (walletAddress) => {
 
 }
 
-
 export const postGetUserBidCountByColor = async (walletAddress, color) => {
     try {
-        const res = await axios.post(BASE_URL +"/getUserBidCountByColor", {
+        const res = await axios.post(BASE_URL +"/getUserBetsAmount", {
             walletAddress: walletAddress,
             color:color
         });
@@ -39,7 +38,6 @@ export const postGetUserBidCountByColor = async (walletAddress, color) => {
         console.log("error", error);
     }
 }
-
 
 export const getWinColor = async () => {
     try {
