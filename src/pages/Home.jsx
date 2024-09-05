@@ -33,6 +33,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getWinColor();
+      console.log(data);
       if (data?.data === 0) {
         setWinningColor("Yellow");
       } else if (data?.data === 1) {
@@ -60,12 +61,11 @@ const Home = () => {
   }, []);
 
   const handleBet = async (color, amount) => {
-
-    if(!walletAddress){
-      alert('Please connect your wallet to make a bet.')
+    if (!walletAddress) {
+      alert("Please connect your wallet to make a bet.");
       return;
     }
-    
+
     if (isLoading) {
       return;
     }
@@ -78,20 +78,20 @@ const Home = () => {
         transaction?.data?.transaction
       );
 
-      console.log(signedTransaction)
-  
+      console.log(signedTransaction);
+
       JSON.stringify(
         await window.pox.broadcast(JSON.parse(signedTransaction[1]))
       );
-  
+
       const apiData = await postPlaceBetMethod(walletAddress, color, amount);
-  
+
       const signedTransaction1 = await window.pox.signdata(
         apiData?.data?.transaction
       );
 
-      console.log(signedTransaction1)
-  
+      console.log(signedTransaction1);
+
       JSON.stringify(
         await window.pox.broadcast(JSON.parse(signedTransaction1[1]))
       );
@@ -102,7 +102,6 @@ const Home = () => {
     } finally {
       setIsLoading(false);
     }
-
   };
 
   const handleBetAmountChange = (color, amount) => {
@@ -145,117 +144,47 @@ const Home = () => {
           <Timer />
         </div>
 
-        <div className="flex flex-col items-center justify-start md:flex-row md:justify-center md:items-center space-y-5 md:space-y-0 space-x-0 md:space-x-5 lg:space-x-10 w-full mt-10 ml-5 md:ml-0 lg:ml-0 xl:ml-0 2xl:ml-24">
-          <div className="w-2/3 md:w-1/5 lg:w-1/4 xl:w-1/4 2xl:w-[90%]">
-            <div className="w-full relative cursor-pointer">
-              <p className="text-[#979797] text-2xl text-center pb-0 md:pb-5 pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
-                {yellowCount && yellowCount}
-              </p>
-              <img
-                src={yellowPoxImg}
-                alt="Yellow Pox"
-                className="w-[90%]"
-                onClick={() => handleBet(0, betAmounts?.yellow)}
-              />
-              <input
-                onChange={(e) =>
-                  handleBetAmountChange("yellow", e.target.value)
-                }
-                value={betAmounts.yellow}
-                type="number"
-                placeholder="Amount"
-                className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
-              />
-              <p
-                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[30%] md:top-[33%] lg:top-[35%] xl:top-[40%]
-             left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
-              >
-                Tap Here
-              </p>
-            </div>
-          </div>
+<div className="flex flex-col md:flex-row flex-wrap items-center justify-center w-full mt-10 overflow-x-hidden">
+  {/* Reusable Color Block Component */}
+  {[
+    { color: "yellow", img: yellowPoxImg, count: yellowCount, bet: betAmounts.yellow },
+    { color: "white", img: whitePoxImg, count: whiteCount, bet: betAmounts.white },
+    { color: "red", img: redPoxImg, count: redCount, bet: betAmounts.red },
+    { color: "green", img: greenPoxImg, count: greenCount, bet: betAmounts.green }
+  ].map(({ color, img, count, bet }, index) => (
+    <div
+      key={index}
+      className="flex flex-col items-center w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2 md:p-4 space-y-2 md:space-y-3"
+    >
+      {/* Count Display */}
+      <p className="text-white text-lg md:text-xl text-center">{count}</p>
 
-          <div className="w-[65%] md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[90%]">
-            <div className="w-full relative cursor-pointer">
-              <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:w-full pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
-                {whiteCount && whiteCount}
-              </p>
-              <img
-                src={whitePoxImg}
-                alt="White Pox"
-                className="w-[90%]"
-                onClick={() => handleBet(1, betAmounts?.white)}
-              />
-              <input
-                onChange={(e) => handleBetAmountChange("white", e.target.value)}
-                value={betAmounts.white}
-                type="number"
-                placeholder="Amount"
-                className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
-              />
-              <p
-                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[30%] md:top-[33%] lg:top-[35%] xl:top-[40%]
-             left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
-              >
-                Tap Here
-              </p>
-            </div>
-          </div>
+      {/* Image and Button Container */}
+      <div
+        className="w-full min-h-[200px] md:min-h-[250px] lg:min-h-[275px] max-h-[300px] bg-center bg-contain bg-no-repeat flex items-center justify-center rounded-lg shadow-md cursor-pointer"
+        style={{ backgroundImage: `url(${img})` }}
+        onClick={() => handleBet(index, bet)}
+      >
+        <p className={`text-${color === "white" ? "black" : "white"} font-bold text-lg md:text-xl lg:text-2xl xl:text-3xl`}>
+          Tap Here
+        </p>
+      </div>
 
-          <div className="w-[65%] md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[90%]">
-            <div className="w-full relative cursor-pointer">
-              <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:w-full pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
-                {redCount && redCount}
-              </p>
-              <img
-                src={redPoxImg}
-                alt="Red Pox"
-                className="w-[90%]"
-                onClick={() => handleBet(2, betAmounts?.red)}
-              />
-              <input
-                onChange={(e) => handleBetAmountChange("red", e.target.value)}
-                value={betAmounts.red}
-                type="number"
-                placeholder="Amount"
-                className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
-              />
-              <p
-                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[30%] md:top-[33%] lg:top-[35%] xl:top-[40%]
-             left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
-              >
-                Tap Here
-              </p>
-            </div>
-          </div>
+      {/* Input Field */}
+      <input
+        onChange={(e) => handleBetAmountChange(color, e.target.value)}
+        value={bet}
+        type="number"
+        placeholder="Amount"
+        className="lg:w-full mt-2 md:mt-3 text-center bg-white text-gray-700 rounded-lg py-2 text-lg md:text-xl font-semibold"
+      />
+    </div>
+  ))}
+</div>
 
-          <div className="w-[65%] md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[90%]">
-            <div className="w-full relative cursor-pointer">
-              <p className="text-[#979797] text-2xl text-center pb-1 md:pb-5 2xl:full pr-6 md:pr-4 lg:pr-6 xl:pr-6 2xl:pr-12">
-                {greenCount && greenCount}
-              </p>
-              <img
-                src={greenPoxImg}
-                alt="Green Pox"
-                className="w-[90%]"
-                onClick={() => handleBet(3, betAmounts?.green)}
-              />
-              <input
-                onChange={(e) => handleBetAmountChange("green", e.target.value)}
-                value={betAmounts.green}
-                type="number"
-                placeholder="Amount"
-                className="text-[#979797] text-center bg-white rounded-lg mt-5 py-2 text-xl font-semibold cursor-pointer w-[90%]"
-              />
-              <p
-                className="text-black font-bold text-4xl md:text-xl lg:text-xl xl:text-3xl 2xl:text-4xl absolute top-[30%] md:top-[33%] lg:top-[35%] xl:top-[40%]
-             left-[16%] md:left-[18%] lg:left-[22%] xl:left-[25%]"
-              >
-                Tap Here
-              </p>
-            </div>
-          </div>
-        </div>
+
+
+
 
         <div className="mt-16 flex justify-center items-center">
           <div className="flex flex-row items-center space-x-4">
@@ -271,9 +200,7 @@ const Home = () => {
           </div>
         </div>
         <p
-          className={`${
-            getWinningColorClass()
-          } text-6xl md:text-8xl font-bold pt-5 whitespace-nowrap`}
+          className={`${getWinningColorClass()} text-6xl md:text-8xl font-bold pt-5 whitespace-nowrap`}
         >
           {winningColor && winningColor} Color
         </p>
