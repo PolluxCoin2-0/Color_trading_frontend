@@ -44,16 +44,16 @@ const Home = () => {
       } 
 
       const yellowData = await postGetUserBidCountByColor(walletAddress, 0);
-      setYellowCount(yellowData?.data);
+      setYellowCount(yellowData && yellowData?.data/Math.pow(10,18));
 
       const whiteData = await postGetUserBidCountByColor(walletAddress, 1);
-      setWhiteCount(whiteData?.data);
+      setWhiteCount(whiteData && whiteData?.data/Math.pow(10,18));
 
       const redData = await postGetUserBidCountByColor(walletAddress, 2);
-      setRedCount(redData?.data);
+      setRedCount(redData && redData?.data/Math.pow(10,18));
 
       const greenData = await postGetUserBidCountByColor(walletAddress, 3);
-      setGreenCount(greenData?.data);
+      setGreenCount(greenData && greenData?.data/Math.pow(10,18));
     };
 
     fetchData();
