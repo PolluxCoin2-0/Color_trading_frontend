@@ -12,7 +12,6 @@ import {
   postGetUserBidCountByColor,
   postPlaceBetMethod,
 } from "../utils/axios";
-import polluxweb from "polluxweb";
 
 const Home = () => {
   const [winningColor, setWinningColor] = useState("");
@@ -33,6 +32,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getWinColor();
+      console.log(data);
       if (data?.data === 0) {
         setWinningColor("Yellow");
       } else if (data?.data === 1) {
@@ -143,7 +143,7 @@ const Home = () => {
           <Timer />
         </div>
 
-        <div className="flex flex-col md:flex-row flex-wrap items-center justify-center w-full mt-10 overflow-x-hidden">
+        <div className="flex flex-row flex-wrap items-center justify-center w-full mt-10 overflow-x-hidden">
           {/* Reusable Color Block Component */}
           {[
             {
