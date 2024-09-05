@@ -187,8 +187,8 @@ const Home = () => {
                 onClick={() => handleBet(index, bet)}
               >
               <p
-  className="text-white font-bold text-lg md:text-xl lg:text-2xl xl:text-3xl"
-  style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)' }}
+  className="text-black font-bold text-lg md:text-xl lg:text-2xl xl:text-3xl"
+  style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)' }}
 >
   Tap Here
 </p>
