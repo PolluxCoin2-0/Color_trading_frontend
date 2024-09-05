@@ -41,7 +41,7 @@ const Home = () => {
         setWinningColor("Red");
       } else {
         setWinningColor("Green");
-      }
+      } 
 
       const yellowData = await postGetUserBidCountByColor(walletAddress, 0);
       setYellowCount(yellowData?.data);
