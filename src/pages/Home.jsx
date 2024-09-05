@@ -33,7 +33,6 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getWinColor();
-      console.log(data);
       if (data?.data === 0) {
         setWinningColor("Yellow");
       } else if (data?.data === 1) {
@@ -136,7 +135,7 @@ const Home = () => {
       />
 
       {/* Main Content */}
-      <div className="relative z-10 w-full min-h-screen px-4 md:px-4 lg:px-24 flex flex-col items-center justify-center pr-4 lg:pr-20 xl:pr-20 2xl:pr-40 pb-10 ">
+      <div className="relative z-10 w-full min-h-screen px-4 md:px-4 lg:px-24 flex flex-col items-center justify-center  pb-10 ">
         <div className="w-[70%] md:w-[50%] lg:w-[40%] xl:w-[40%] 2xl:w-[20%] flex flex-col justify-center items-center">
           <p className="text-xl font-bold text-white lg:text-center mb-6 pt-10 md:pt-0">
             Draw Time
@@ -144,47 +143,69 @@ const Home = () => {
           <Timer />
         </div>
 
-<div className="flex flex-col md:flex-row flex-wrap items-center justify-center w-full mt-10 overflow-x-hidden">
-  {/* Reusable Color Block Component */}
-  {[
-    { color: "yellow", img: yellowPoxImg, count: yellowCount, bet: betAmounts.yellow },
-    { color: "white", img: whitePoxImg, count: whiteCount, bet: betAmounts.white },
-    { color: "red", img: redPoxImg, count: redCount, bet: betAmounts.red },
-    { color: "green", img: greenPoxImg, count: greenCount, bet: betAmounts.green }
-  ].map(({ color, img, count, bet }, index) => (
-    <div
-      key={index}
-      className="flex flex-col items-center w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2 md:p-4 space-y-2 md:space-y-3"
-    >
-      {/* Count Display */}
-      <p className="text-white text-lg md:text-xl text-center">{count}</p>
+        <div className="flex flex-col md:flex-row flex-wrap items-center justify-center w-full mt-10 overflow-x-hidden">
+          {/* Reusable Color Block Component */}
+          {[
+            {
+              color: "yellow",
+              img: yellowPoxImg,
+              count: yellowCount,
+              bet: betAmounts.yellow,
+            },
+            {
+              color: "white",
+              img: whitePoxImg,
+              count: whiteCount,
+              bet: betAmounts.white,
+            },
+            {
+              color: "red",
+              img: redPoxImg,
+              count: redCount,
+              bet: betAmounts.red,
+            },
+            {
+              color: "green",
+              img: greenPoxImg,
+              count: greenCount,
+              bet: betAmounts.green,
+            },
+          ].map(({ color, img, count, bet }, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2 md:p-4 space-y-2 md:space-y-3"
+            >
+              {/* Count Display */}
+              <p className="text-white text-lg md:text-xl text-center">
+                {count}
+              </p>
 
-      {/* Image and Button Container */}
-      <div
-        className="w-full min-h-[200px] md:min-h-[250px] lg:min-h-[275px] max-h-[300px] bg-center bg-contain bg-no-repeat flex items-center justify-center rounded-lg shadow-md cursor-pointer"
-        style={{ backgroundImage: `url(${img})` }}
-        onClick={() => handleBet(index, bet)}
-      >
-        <p className={`text-${color === "white" ? "black" : "white"} font-bold text-lg md:text-xl lg:text-2xl xl:text-3xl`}>
-          Tap Here
-        </p>
-      </div>
+              {/* Image and Button Container */}
+              <div
+                className="w-full min-h-[200px] md:min-h-[250px] lg:min-h-[275px] max-h-[300px] bg-center bg-contain bg-no-repeat flex items-center justify-center rounded-lg shadow-md cursor-pointer"
+                style={{ backgroundImage: `url(${img})` }}
+                onClick={() => handleBet(index, bet)}
+              >
+              <p
+  className="text-white font-bold text-lg md:text-xl lg:text-2xl xl:text-3xl"
+  style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)' }}
+>
+  Tap Here
+</p>
 
-      {/* Input Field */}
-      <input
-        onChange={(e) => handleBetAmountChange(color, e.target.value)}
-        value={bet}
-        type="number"
-        placeholder="Amount"
-        className="lg:w-full mt-2 md:mt-3 text-center bg-white text-gray-700 rounded-lg py-2 text-lg md:text-xl font-semibold"
-      />
-    </div>
-  ))}
-</div>
+              </div>
 
-
-
-
+              {/* Input Field */}
+              <input
+                onChange={(e) => handleBetAmountChange(color, e.target.value)}
+                value={bet}
+                type="number"
+                placeholder="Amount"
+                className=" mt-2 md:mt-3 text-center bg-white text-gray-700 rounded-lg py-2 text-lg md:text-xl font-semibold"
+              />
+            </div>
+          ))}
+        </div>
 
         <div className="mt-16 flex justify-center items-center">
           <div className="flex flex-row items-center space-x-4">
@@ -192,7 +213,7 @@ const Home = () => {
               <img src={iconImg} alt="icon-image" />
             </div>
             <p className="text-white text-2xl md:text-4xl font-semibold whitespace-nowrap">
-              Winning Color
+             Last Winning Color
             </p>
             <div className="flex flex-row">
               <img src={iconImg} alt="icon-image" />
