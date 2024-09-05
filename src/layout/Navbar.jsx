@@ -13,8 +13,7 @@ const Navbar = () => {
     if (walletAddress) {
       const fetchData = async () => {
         const data = await postGetUserTotalWinnings(walletAddress);
-        const toDecimal = await polluxweb.toDecimal(data?.data?.hex)
-        setWinningCount(toDecimal);
+        setWinningCount(data?.data);
       };
       fetchData();
     }
