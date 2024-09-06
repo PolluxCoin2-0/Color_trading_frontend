@@ -2,20 +2,23 @@ import { useState, useEffect } from "react";
 import { endBidding, startBidding } from "../utils/axios";
 
 const Timer = () => {
-  const getNextTenMinutes = () => {
+  // Function to get the next 6-hour mark
+  const getNextSixHours = () => {
     const now = new Date();
-    const nextTenMinutes = new Date(now);
-    const minutes = now.getMinutes();
-    const nextMinuteMark = Math.ceil(minutes / 10) * 10;
+    const nextSixHours = new Date(now);
 
-    nextTenMinutes.setMinutes(nextMinuteMark, 0, 0);
-    if (nextTenMinutes <= now) {
-      nextTenMinutes.setMinutes(nextTenMinutes.getMinutes() + 10);
+    const hours = now.getHours();
+    const nextHourMark = Math.ceil(hours / 6) * 6;
+
+    nextSixHours.setHours(nextHourMark, 0, 0, 0);
+    if (nextSixHours <= now) {
+      nextSixHours.setHours(nextSixHours.getHours() + 6);
     }
 
-    return nextTenMinutes;
+    return nextSixHours;
   };
 
+  // Function to calculate time left to the next 6-hour mark
   const calculateTimeLeft = (targetDate) => {
     const now = new Date();
     const difference = targetDate - now;
@@ -45,7 +48,7 @@ const Timer = () => {
     minutes: "00",
     seconds: "00",
   });
-  const [targetDate, setTargetDate] = useState(getNextTenMinutes());
+  const [targetDate, setTargetDate] = useState(getNextSixHours());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -56,7 +59,7 @@ const Timer = () => {
 
         setTimeout(() => {
           startBidding();
-          setTargetDate(getNextTenMinutes());
+          setTargetDate(getNextSixHours());
         }, 5000);
       } else {
         setTimeLeft({
