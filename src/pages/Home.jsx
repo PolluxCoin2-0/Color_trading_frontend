@@ -77,8 +77,6 @@ const Home = () => {
         transaction?.data?.transaction
       );
 
-      console.log(signedTransaction);
-
       JSON.stringify(
         await window.pox.broadcast(JSON.parse(signedTransaction[1]))
       );
@@ -88,8 +86,6 @@ const Home = () => {
       const signedTransaction1 = await window.pox.signdata(
         apiData?.data?.transaction
       );
-
-      console.log(signedTransaction1);
 
       JSON.stringify(
         await window.pox.broadcast(JSON.parse(signedTransaction1[1]))
@@ -177,7 +173,7 @@ const Home = () => {
             >
               {/* Count Display */}
               <p className="text-white text-lg md:text-xl text-center">
-                {count}
+                {count >0? count: 0}
               </p>
 
               {/* Image and Button Container */}
