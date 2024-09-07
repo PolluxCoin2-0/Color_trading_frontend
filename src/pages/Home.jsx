@@ -60,44 +60,44 @@ const Home = () => {
   }, []);
 
   const handleBet = async (color, amount) => {
-    alert("Betting has closed!");
-      // if (!walletAddress) {
-      //   alert("Please connect your wallet to make a bet.");
-      //   return;
-      // }
+    // alert("Betting has closed!");
+      if (!walletAddress) {
+        alert("Please connect your wallet to make a bet.");
+        return;
+      }
 
-      // if (isLoading) {
-      //   return;
-      // }
+      if (isLoading) {
+        return;
+      }
 
-      // setIsLoading(true);
+      setIsLoading(true);
 
-      // try {
-      //   const transaction = await getApproval(walletAddress, amount);
-      //   const signedTransaction = await window.pox.signdata(
-      //     transaction?.data?.transaction
-      //   );
+      try {
+        const transaction = await getApproval(walletAddress, amount);
+        const signedTransaction = await window.pox.signdata(
+          transaction?.data?.transaction
+        );
 
-      //   JSON.stringify(
-      //     await window.pox.broadcast(JSON.parse(signedTransaction[1]))
-      //   );
+        JSON.stringify(
+          await window.pox.broadcast(JSON.parse(signedTransaction[1]))
+        );
 
-      //   const apiData = await postPlaceBetMethod(walletAddress, color, amount);
+        const apiData = await postPlaceBetMethod(walletAddress, color, amount);
 
-      //   const signedTransaction1 = await window.pox.signdata(
-      //     apiData?.data?.transaction
-      //   );
+        const signedTransaction1 = await window.pox.signdata(
+          apiData?.data?.transaction
+        );
 
-      //   JSON.stringify(
-      //     await window.pox.broadcast(JSON.parse(signedTransaction1[1]))
-      //   );
+        JSON.stringify(
+          await window.pox.broadcast(JSON.parse(signedTransaction1[1]))
+        );
 
-      //   alert("Bet placed Successfully!");
-      // } catch (error) {
-      //   console.error(error);
-      // } finally {
-      //   setIsLoading(false);
-      // }
+        alert("Bet placed Successfully!");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
   };
 
   const handleBetAmountChange = (color, amount) => {
