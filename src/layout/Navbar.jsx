@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import WalletIcon from "../assets/wallet.png";
 import { postGetUserTotalWinnings } from "../utils/axios";
-import polluxweb from "polluxweb";
 import bgImg from "../assets/bgImage.png";
 import logo from "../assets/logo.png";
 
@@ -26,16 +25,20 @@ const Navbar = () => {
         clearInterval(obj);
         const detailsData = JSON.stringify(await window.pox.getDetails());
         const parsedDetailsObject = JSON.parse(detailsData);
+        if( parsedDetailsObject[1].data?.wallet_address)
+        {
         sessionStorage.setItem(
           "wallet",
           parsedDetailsObject[1].data?.wallet_address
         );
         window.location.reload();
       }
+      }
     }, 1000);
   }
 
   function truncateString(str, maxLength) {
+    
     if (str?.length > 0 && str?.length <= maxLength) {
       return str;
     } else {

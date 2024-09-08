@@ -32,7 +32,6 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getWinColor();
-      console.log(data);
       if (data?.data === 0) {
         setWinningColor("Yellow");
       } else if (data?.data === 1) {

@@ -55,10 +55,13 @@ const Timer = () => {
       const timeRemaining = calculateTimeLeft(targetDate);
 
       if (timeRemaining.hours === 0 && timeRemaining.minutes === 0 && timeRemaining.seconds === 0) {
+        console.log("running endBidding");
         endBidding();
 
         setTimeout(() => {
+          console.log("start startBidding");
           startBidding();
+          console.log("END startBidding");
           setTargetDate(getNextSixHours());
         }, 5000);
       } else {
@@ -72,6 +75,8 @@ const Timer = () => {
 
     return () => clearInterval(timer);
   }, [targetDate]);
+
+  // console.log(targetDate);
 
   return (
     <div className="flex items-start justify-center w-full gap-3 count-down-main bg-gradient-to-b from-[#4A93B6] to-[#006799] rounded-3xl py-2 border-[2px]
