@@ -2,19 +2,20 @@ import { useState, useEffect } from "react";
 import { endBidding, startBidding } from "../utils/axios";
 
 const Timer = () => {
-  // Function to calculate the next 10-minute interval
-  const getNextTenMinutes = () => {
+  // Function to calculate the next 1-hour interval
+  const getNextHour = () => {
     const now = new Date();
-    const nextTenMinutes = new Date(now);
+    const nextHour = new Date(now);
     const minutes = now.getMinutes();
-    const nextMinuteMark = Math.ceil(minutes / 10) * 10;
-
-    nextTenMinutes.setMinutes(nextMinuteMark, 0, 0);
-    if (nextTenMinutes <= now) {
-      nextTenMinutes.setMinutes(nextTenMinutes.getMinutes() + 10);
+    const seconds = now.getSeconds();
+    
+    // Calculate the next hour mark
+    nextHour.setMinutes(0, 0, 0);
+    if (now.getSeconds() > 0) {
+      nextHour.setHours(nextHour.getHours() + 1);
     }
 
-    return nextTenMinutes;
+    return nextHour;
   };
 
   // Function to calculate the time left until the target date
@@ -27,7 +28,7 @@ const Timer = () => {
     if (difference > 0) {
       timeLeft = {
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
+        minutes: Math.floor((difference / (1000 * 60)) % 60),
         seconds: Math.floor((difference / 1000) % 60),
       };
     } else {
@@ -41,15 +42,15 @@ const Timer = () => {
     return timeLeft;
   };
 
-  // State to store the remaining time
+  // Set an initial state with default values for timeLeft
   const [timeLeft, setTimeLeft] = useState({
     hours: "00",
     minutes: "00",
     seconds: "00",
   });
 
-  // State to store the target date for the countdown
-  const [targetDate, setTargetDate] = useState(getNextTenMinutes());
+  // Set the initial target date for the countdown
+  const [targetDate, setTargetDate] = useState(getNextHour());
 
   // State to prevent multiple executions of startBidding and endBidding
   const [hasRun, setHasRun] = useState(false);
@@ -71,7 +72,7 @@ const Timer = () => {
           console.log("start bidding");
           startBidding();
           console.log("start below bidding");
-          setTargetDate(getNextTenMinutes());
+          setTargetDate(getNextHour());
         }, 5000);
 
         setHasRun(true); // Prevent further executions
