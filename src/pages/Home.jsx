@@ -6,6 +6,7 @@ import greenPoxImg from "../assets/green.png";
 import iconImg from "../assets/icon.png";
 import bgImg from "../assets/bgImage.png";
 import { useEffect, useState } from "react";
+import { endBidding, startBidding } from "../utils/axios";
 import {
   getApproval,
   getWinColor,
@@ -138,6 +139,26 @@ const Home = () => {
           </p>
           <Timer />
         </div>
+
+        {
+          walletAddress === "PVWfKVJZhFfvUoh6PkVpPiQQfkTr4GLf5V" &&
+          <div className="flex items-center justify-center space-x-8 pt-6">
+          <button
+            className="relative text-black font-bold text-xl cursor-pointer border-2 border-gray-300 rounded-full px-10 py-3 bg-yellow-400 shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            onClick={startBidding}
+          >
+            Start
+          </button>
+          <button
+            className="relative text-black font-bold text-xl cursor-pointer border-2 border-gray-300 rounded-full px-10 py-3 bg-yellow-400 shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            onClick={endBidding}
+          >
+            End
+          </button>
+        </div>
+        
+        }
+        
 
         <div className="flex flex-row flex-wrap items-center justify-center w-full mt-10 overflow-x-hidden">
           {/* Reusable Color Block Component */}
