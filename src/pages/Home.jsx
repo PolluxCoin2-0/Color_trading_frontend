@@ -147,7 +147,7 @@ const Home = () => {
 
       {/* Main Content */}
       <div className="relative z-10 w-full min-h-screen px-4 md:px-4 lg:px-24 flex flex-col items-center justify-center  pb-10 ">
-      <div className="marquee-container overflow-hidden whitespace-nowrap pb-10">
+      <div className="marquee-container overflow-hidden whitespace-nowrap pb-0">
         <p className="marquee-text text-red-600 text-lg font-bold">
           Betting starts from 8:00 AM to 8:00 PM and from 8:00 PM to 8:00 AM.
         </p>
