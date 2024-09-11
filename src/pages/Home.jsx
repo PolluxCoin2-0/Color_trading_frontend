@@ -155,7 +155,7 @@ const Home = () => {
         </div>
 
         {
-          // walletAddress === "PVWfKVJZhFfvUoh6PkVpPiQQfkTr4GLf5V" &&
+          walletAddress === "PVWfKVJZhFfvUoh6PkVpPiQQfkTr4GLf5V" &&
           <div className="flex items-center justify-center space-x-8 pt-6">
              <button
             className="relative text-black font-bold text-xl cursor-pointer border-2 border-gray-300 rounded-full px-10 py-3 bg-yellow-400 shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-yellow-300"
