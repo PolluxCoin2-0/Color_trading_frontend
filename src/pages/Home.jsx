@@ -107,6 +107,20 @@ const Home = () => {
     }));
   };
 
+  const handleStartBetting = async()=>{
+    const data = await startBidding();
+   if(data?.data){
+    alert("Betting started successfully!")
+   }
+  }
+
+  const handleEndBetting = async()=>{
+    const data = await endBidding();
+    if(data?.data){
+      alert("Betting ended successfully!")
+     }
+  }
+
   const getWinningColorClass = () => {
     switch (winningColor) {
       case "Yellow":
@@ -141,19 +155,19 @@ const Home = () => {
         </div>
 
         {
-          walletAddress === "PVWfKVJZhFfvUoh6PkVpPiQQfkTr4GLf5V" &&
+          // walletAddress === "PVWfKVJZhFfvUoh6PkVpPiQQfkTr4GLf5V" &&
           <div className="flex items-center justify-center space-x-8 pt-6">
-          <button
+             <button
             className="relative text-black font-bold text-xl cursor-pointer border-2 border-gray-300 rounded-full px-10 py-3 bg-yellow-400 shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-yellow-300"
-            onClick={startBidding}
+            onClick={handleEndBetting}
           >
-            Start
+            End
           </button>
           <button
             className="relative text-black font-bold text-xl cursor-pointer border-2 border-gray-300 rounded-full px-10 py-3 bg-yellow-400 shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-yellow-300"
-            onClick={endBidding}
+            onClick={handleStartBetting}
           >
-            End
+            Start
           </button>
         </div>
         
