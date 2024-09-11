@@ -1,21 +1,24 @@
 import { useState, useEffect } from "react";
-import { endBidding, startBidding } from "../utils/axios";
 
 const Timer = () => {
-  // Function to calculate the next 1-hour interval
-  const getNextHour = () => {
+  // Function to calculate the next 8:00 AM or 8:00 PM interval
+  const getNextTargetTime = () => {
     const now = new Date();
-    const nextHour = new Date(now);
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
+    const nextTarget = new Date(now);
     
-    // Calculate the next hour mark
-    nextHour.setMinutes(0, 0, 0);
-    if (now.getSeconds() > 0) {
-      nextHour.setHours(nextHour.getHours() + 1);
+    if (now.getHours() < 8 || (now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0)) {
+      // If before 8:00 AM, set the target to 8:00 AM today
+      nextTarget.setHours(8, 0, 0, 0);
+    } else if (now.getHours() < 20 || (now.getHours() === 20 && now.getMinutes() === 0 && now.getSeconds() === 0)) {
+      // If before 8:00 PM, set the target to 8:00 PM today
+      nextTarget.setHours(20, 0, 0, 0);
+    } else {
+      // Otherwise, set the target to 8:00 AM the next day
+      nextTarget.setDate(nextTarget.getDate() + 1);
+      nextTarget.setHours(8, 0, 0, 0);
     }
 
-    return nextHour;
+    return nextTarget;
   };
 
   // Function to calculate the time left until the target date
@@ -50,7 +53,7 @@ const Timer = () => {
   });
 
   // Set the initial target date for the countdown
-  const [targetDate, setTargetDate] = useState(getNextHour());
+  const [targetDate, setTargetDate] = useState(getNextTargetTime());
 
   // State to prevent multiple executions of startBidding and endBidding
   const [hasRun, setHasRun] = useState(false);
@@ -65,14 +68,10 @@ const Timer = () => {
         timeRemaining.seconds === 0 &&
         !hasRun // Ensure that it only runs once
       ) {
-        console.log("end bidding");
-        endBidding();
-
+        // Wait for 5 seconds before resetting the timer
         setTimeout(() => {
-          console.log("start bidding");
-          startBidding();
-          console.log("start below bidding");
-          setTargetDate(getNextHour());
+          setTargetDate(getNextTargetTime());
+          setHasRun(false); // Reset the hasRun state to allow future executions
         }, 5000);
 
         setHasRun(true); // Prevent further executions
