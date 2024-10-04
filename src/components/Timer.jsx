@@ -1,22 +1,13 @@
 import { useState, useEffect } from "react";
 
 const Timer = () => {
-  // Function to calculate the next 8:00 AM or 8:00 PM interval
+  // Function to calculate the next full hour
   const getNextTargetTime = () => {
     const now = new Date();
     const nextTarget = new Date(now);
-    
-    if (now.getHours() < 8 || (now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0)) {
-      // If before 8:00 AM, set the target to 8:00 AM today
-      nextTarget.setHours(8, 0, 0, 0);
-    } else if (now.getHours() < 20 || (now.getHours() === 20 && now.getMinutes() === 0 && now.getSeconds() === 0)) {
-      // If before 8:00 PM, set the target to 8:00 PM today
-      nextTarget.setHours(20, 0, 0, 0);
-    } else {
-      // Otherwise, set the target to 8:00 AM the next day
-      nextTarget.setDate(nextTarget.getDate() + 1);
-      nextTarget.setHours(8, 0, 0, 0);
-    }
+
+    // Set the base time to midnight (12:00 AM)
+    nextTarget.setHours(now.getHours() + 1, 0, 0, 0); // Move to the next full hour
 
     return nextTarget;
   };
