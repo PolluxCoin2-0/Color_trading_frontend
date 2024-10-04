@@ -1,18 +1,26 @@
 import { useState, useEffect } from "react";
 
 const Timer = () => {
-  // Function to calculate the next full hour
+  // Set the base time to 7:12 PM
+  const baseMinutes = 12;
+
+  // Function to calculate the next target time (every hour, on the 12th minute)
   const getNextTargetTime = () => {
     const now = new Date();
     const nextTarget = new Date(now);
 
-    // Set the base time to midnight (12:00 AM)
-    nextTarget.setHours(now.getHours() + 1, 0, 0, 0); // Move to the next full hour
+    if (now.getMinutes() < baseMinutes) {
+      // If the current minute is before 12 minutes, stay in the same hour but set the target to :12
+      nextTarget.setMinutes(baseMinutes, 0, 0);
+    } else {
+      // If it's after :12, move to the next hour and set the target to :12
+      nextTarget.setHours(now.getHours() + 1, baseMinutes, 0, 0);
+    }
 
     return nextTarget;
   };
 
-  // Function to calculate the time left until the target date
+  // Function to calculate the time left until the target time
   const calculateTimeLeft = (targetDate) => {
     const now = new Date();
     const difference = targetDate - now;
@@ -46,7 +54,7 @@ const Timer = () => {
   // Set the initial target date for the countdown
   const [targetDate, setTargetDate] = useState(getNextTargetTime());
 
-  // State to prevent multiple executions of startBidding and endBidding
+  // State to prevent multiple executions of the timer reset logic
   const [hasRun, setHasRun] = useState(false);
 
   useEffect(() => {
