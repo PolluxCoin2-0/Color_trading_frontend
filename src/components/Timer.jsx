@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 
 const Timer = () => {
-  // Set the base time to 7:12 PM
-  const baseMinutes = 12;
+  // Set the base time to 14:29
+  const baseMinutes = 29;
 
-  // Function to calculate the next target time (every hour, on the 12th minute)
+  // Function to calculate the next target time (every hour at the 29th minute)
   const getNextTargetTime = () => {
     const now = new Date();
     const nextTarget = new Date(now);
 
     if (now.getMinutes() < baseMinutes) {
-      // If the current minute is before 12 minutes, stay in the same hour but set the target to :12
+      // If the current time is before the 29th minute, set the target to :29 of the current hour
       nextTarget.setMinutes(baseMinutes, 0, 0);
     } else {
-      // If it's after :12, move to the next hour and set the target to :12
+      // If it's past the 29th minute, move to the next hour and set the target to :29
       nextTarget.setHours(now.getHours() + 1, baseMinutes, 0, 0);
     }
 
