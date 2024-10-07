@@ -6,7 +6,7 @@ import greenPoxImg from "../assets/green.png";
 import iconImg from "../assets/icon.png";
 import bgImg from "../assets/bgImage.png";
 import { useEffect, useState } from "react";
-import { endBidding, startBidding } from "../utils/axios";
+// import { endBidding, startBidding } from "../utils/axios";
 import {
   getApproval,
   getWinColor,
@@ -107,19 +107,19 @@ const Home = () => {
     }));
   };
 
-  const handleStartBetting = async()=>{
-    const data = await startBidding();
-   if(data?.data){
-    alert("Betting started successfully!")
-   }
-  }
+  // const handleStartBetting = async()=>{
+  //   const data = await startBidding();
+  //  if(data?.data){
+  //   alert("Betting started successfully!")
+  //  }
+  // }
 
-  const handleEndBetting = async()=>{
-    const data = await endBidding();
-    if(data?.data){
-      alert("Betting ended successfully!")
-     }
-  }
+  // const handleEndBetting = async()=>{
+  //   const data = await endBidding();
+  //   if(data?.data){
+  //     alert("Betting ended successfully!")
+  //    }
+  // }
 
   const getWinningColorClass = () => {
     switch (winningColor) {
@@ -158,7 +158,7 @@ const Home = () => {
           </p>
           <Timer />
         </div>
-
+{/* 
         {
           walletAddress === "PVWfKVJZhFfvUoh6PkVpPiQQfkTr4GLf5V" &&
           <div className="flex items-center justify-center space-x-8 pt-6">
@@ -177,7 +177,7 @@ const Home = () => {
         </div>
         
         }
-        
+         */}
 
         <div className="flex flex-row flex-wrap items-center justify-center w-full mt-10 overflow-x-hidden">
           {/* Reusable Color Block Component */}
